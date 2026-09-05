@@ -15,7 +15,7 @@ class Solution:
             if (node[1], node[2]) in best and best[(node[1], node[2])] <= node[0]:
                 continue
 
-            best[(node[1], node[2])] = cost
+            best[(node[1], node[2])] = node[0]
 
             if node[1] == dst:
                 return node[0]
@@ -24,7 +24,10 @@ class Solution:
                 continue
 
             for neighbor in adj_map[node[1]]:
-                    if neighbor not in best or node[0] + neighbor[1] < best[neighbor]:
-                        heapq.heappush(queue, (node[0] + neighbor[1], neighbor[0], node[2] + 1))
+                new_state = (neighbor[0], node[2] + 1)
+                new_cost = node[0] + neighbor[1]
+
+                if new_state not in best or new_cost < best[new_state]:
+                    heapq.heappush(queue, (new_cost, neighbor[0], node[2] + 1))
         
         return -1
