@@ -19,14 +19,20 @@ class SnapshotArray:
         return self.snap_id - 1
 
     def get(self, index: int, snap_id: int) -> int:
-        res = 0
+        records = self.records[index]
+        left, right = 0, len(records) - 1
+        result = 0
 
-        for snaps in self.records[index]:
-            if snaps[0] <= snap_id:
-                res = snaps[1]
+        while left <= right:
+            mid = (left + right) // 2
+
+            if records[mid][0] <= snap_id:
+                result = records[mid][1]
+                left = mid + 1
             else:
-                break
-        return res
+                right = mid - 1
+
+        return result
 
 
 # Your SnapshotArray object will be instantiated and called as such:
