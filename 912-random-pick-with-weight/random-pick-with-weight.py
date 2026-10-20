@@ -13,11 +13,17 @@ class Solution:
     def pickIndex(self) -> int:
         prob = random.random()
 
-        i = 0
-        while i < len(self.probs) and self.probs[i] < prob:
-            i += 1
+        low, high = 0, len(self.probs) - 1
+
+        while low < high:
+            mid = (low + high) // 2
+
+            if prob < self.probs[mid]:
+                high = mid
+            else:
+                low = mid + 1
         
-        return i
+        return low
 
 
 # Your Solution object will be instantiated and called as such:
